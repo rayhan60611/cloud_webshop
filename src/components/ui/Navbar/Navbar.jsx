@@ -53,7 +53,7 @@ const Navbar = () => {
           About Us
         </a>
         <button className="font-semibold text-2xl md:text-[16px] rounded hover:bg-white hover:text-black  p-2 px-4 duration-500 hover:scale-105 border-white border-[1px]">
-          Try Now!
+          Buy Now!
         </button>
       </nav>
     </div>
