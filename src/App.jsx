@@ -1,12 +1,13 @@
 import "./App.css";
+import Navbar from "./components/ui/Navbar/Navbar";
 
 function App() {
   return (
     <div>
-      <h1 className="text-3xl ">app js</h1>
+      <Navbar></Navbar>
+      <h1 className="text-3xl ">app js file</h1>
     </div>
   );
 }
 
 export default App;
-cloud_webshop;
