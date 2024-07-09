@@ -1,7 +1,7 @@
-import React from "react";
+// import React from "react";
 
 const AllProducts = () => {
-  return <div>all products</div>;
+  return <div className="h-screen">All products</div>;
 };
 
 export default AllProducts;

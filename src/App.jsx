@@ -5,7 +5,7 @@ import Navbar from "./components/ui/Navbar/Navbar";
 
 function App() {
   return (
-    <div>
+    <div className="select-none">
       <Navbar></Navbar>
       <Outlet />
       <Footer></Footer>

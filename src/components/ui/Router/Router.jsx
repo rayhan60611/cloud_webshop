@@ -3,6 +3,7 @@ import App from "@/App";
 import { createBrowserRouter } from "react-router-dom";
 import NotFoundPage from "../notFoundPage/NotFoundPage";
 import AllProducts from "../allProducts/AllProducts";
+import Login from "../login/Login";
 
 const router = createBrowserRouter([
   {
@@ -13,6 +14,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <AllProducts />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
       },
     ],
   },
