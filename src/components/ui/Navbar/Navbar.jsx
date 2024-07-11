@@ -39,9 +39,9 @@ const Navbar = () => {
         </a>
         <a
           className="font-semibold text-2xl md:text-[16px] rounded hover:bg-white hover:text-black  p-2 duration-500 hover:scale-105"
-          href="/service"
+          href="/addProduct"
         >
-          Service
+          Add Product
         </a>
         <a
           className="font-semibold text-2xl md:text-[16px] rounded hover:bg-white hover:text-black  p-2 duration-500 hover:scale-105"
@@ -58,10 +58,10 @@ const Navbar = () => {
         <button className="font-semibold text-2xl md:text-[16px] rounded hover:bg-white hover:text-black  p-2 px-4 duration-500 hover:scale-105 border-white border-[1px]">
           Buy Now!
         </button>
-        {user && (
-          <div className="group relative">
+        {user ? (
+          <div className="group relative z-20">
             <img
-              className="w-10 rounded-full border-[2px] border-green-600"
+              className="w-10 h-10 rounded-full border-[2px] border-green-600 "
               src={user.photoURL}
               alt=""
             />
@@ -79,6 +79,13 @@ const Navbar = () => {
               </div>
             </div>
           </div>
+        ) : (
+          <a
+            className="bg-white text-black p-2 font-semibold hover:bg-green-500 duration-500"
+            href="/login"
+          >
+            Login
+          </a>
         )}
       </nav>
     </div>
