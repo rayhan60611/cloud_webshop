@@ -8,6 +8,11 @@ import Home from "../home/Home";
 import AddProduct from "../allProducts/AddProduct";
 import UpdateProduct from "../allProducts/UpdateProduct";
 
+async function fetchAllProduct() {
+  const result = await fetch("http://localhost:5000/products");
+  return result;
+}
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -17,6 +22,7 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+        loader: fetchAllProduct,
       },
       {
         path: "/login",
@@ -25,6 +31,7 @@ const router = createBrowserRouter([
       {
         path: "/allProduct",
         element: <AllProducts />,
+        loader: fetchAllProduct,
       },
       {
         path: "/addProduct",

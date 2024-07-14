@@ -6,7 +6,7 @@ const Home = () => {
   return (
     <div>
       <DemoCarousel />
-      <div className="flex flex-col gap-10 ">
+      <div className="flex flex-col gap-10 container">
         <div className="flex flex-col items-center gap-2 ">
           <h1 className="text-center text-2xl font-bold">All Products</h1>
           <hr className="w-2/5 border-2" />
