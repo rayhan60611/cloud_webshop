@@ -11,58 +11,110 @@ const AddProduct = () => {
     event.preventDefault();
     const Form = event.target;
     const name = Form.name.value;
-    const image = Form.image.value;
+    const image = Form.image.files[0];
     const category = Form.category.value;
     const stock = Form.stock.value;
     const price = Form.price.value;
     const description = Form.description.value;
     const date = new Date().toISOString();
 
-    const product = {
-      name,
-      image,
-      category,
-      stock,
-      price,
-      description,
-      date,
-    };
+    // Ensure that an image file is selected
+    if (!image) {
+      toast.error("Please select an image file.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      return;
+    }
+    console.log(image);
+    // const product = {
+    //   name,
+    //   image,
+    //   category,
+    //   stock,
+    //   price,
+    //   description,
+    //   date,
+    // };
 
-    console.log(product);
+    // console.log(product);
 
-    // adding a Product to mongo db
-    fetch("http://localhost:5000/products", {
-      method: "POST", // method
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(product),
-    })
+    //image upload to imageBB
+
+    const data = new FormData();
+    data.append("image", image);
+    fetch(
+      "https://api.imgbb.com/1/upload?key=9837d638e5dd115a4aab4d952fb9bba4",
+      {
+        method: "POST",
+        body: data,
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
-        if (data.message) {
-          toast.success(`${product.name} Addded Successfully`, {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-          Form.reset();
-        } else {
-          toast.error(
-            <div className="flex flex-col gap-1">
-              {data?.error?.map((err, index) => (
-                <p key={index}>
-                  {index + 1} . {err}
-                </p>
-              ))}
-            </div>,
-            {
+        const product = {
+          name,
+          image: data.data.url,
+          category,
+          stock,
+          price,
+          description,
+          date,
+        };
+        // adding a Product to mongodb
+        fetch("http://localhost:5000/products", {
+          method: "POST", // method
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(product),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            if (data.message) {
+              toast.success(`${product.name} Addded Successfully`, {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+              });
+              Form.reset();
+            } else {
+              toast.error(
+                <div className="flex flex-col gap-1">
+                  {data?.error?.map((err, index) => (
+                    <p key={index}>
+                      {index + 1} . {err}
+                    </p>
+                  ))}
+                </div>,
+                {
+                  position: "top-right",
+                  autoClose: 3000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "colored",
+                }
+              );
+            }
+          })
+          .catch((err) => {
+            console.log(err.message);
+            toast.error(err.message, {
               position: "top-right",
               autoClose: 3000,
               hideProgressBar: false,
@@ -71,22 +123,8 @@ const AddProduct = () => {
               draggable: true,
               progress: undefined,
               theme: "colored",
-            }
-          );
-        }
-      })
-      .catch((err) => {
-        console.log(err.message);
-        toast.error(err.message, {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
+            });
+          });
       });
 
     console.log("form reset");
