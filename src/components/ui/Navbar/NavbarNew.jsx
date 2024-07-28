@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Sheet, SheetContent, SheetTrigger } from "../sheet";
 import { Button } from "../button";
 import { Input } from "../input";
+import { AuthContext } from "@/providers/AuthProviders";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,8 +23,12 @@ import {
   NavigationMenuTrigger,
 } from "../navigation-menu";
 import { cn } from "@/lib/utils";
+import { useContext } from "react";
 
 const NavbarNew = () => {
+  const { user, handleLogout } = useContext(AuthContext);
+  const fullname = user?.displayName.split(" ");
+
   return (
     <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 px-4 md:px-6 z-50">
       <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
@@ -192,22 +197,42 @@ const NavbarNew = () => {
             />
           </div>
         </form>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="secondary" size="icon" className="rounded-full">
-              <CircleUser className="h-5 w-5" />
-              <span className="sr-only">Toggle user menu</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>Settings</DropdownMenuItem>
-            <DropdownMenuItem>Support</DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>Logout</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        {user ? (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="secondary" size="icon" className="rounded-full">
+                {user.photoURL ? (
+                  <img
+                    className="rounded-full border-green-600 "
+                    src={user.photoURL}
+                    alt=""
+                  />
+                ) : (
+                  <CircleUser className="h-5 w-5" />
+                )}
+                <span className="sr-only">Toggle user menu</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>
+                Hello,{" "}
+                <h1 className="font-semibold pl-1">
+                  {fullname ? fullname[fullname.length - 1] : " "}
+                </h1>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        ) : (
+          <Button>
+            <Link asChild to="/login">
+              Login
+            </Link>
+          </Button>
+        )}
       </div>
     </header>
   );

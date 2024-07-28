@@ -1,6 +1,7 @@
 import { Loader, LoaderPinwheel } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { Button } from "../button";
 
 const SingleProductView = () => {
   const [product, setProduct] = useState(null);
@@ -40,8 +41,34 @@ const SingleProductView = () => {
       </div>
     );
   return (
-    <div className="flex-1">
-      <h1>{product?.name}</h1>
+    <div className="flex-1 container my-8">
+      <div className="flex flex-col  shadow-2xl items-center gap-4 p-8 rounded-xl">
+        <img className="w-2/4" src={product?.image} alt="" />
+        <h1 className="text-xl uppercase font-bold">{product?.name}</h1>
+        <p className="text-xs text-justify text-slate-500">
+          {product?.description}
+        </p>
+        <h1>
+          <span className="text-xl font-bold">
+            Price
+            <span>
+              {" "}
+              :{" "}
+              <span>
+                {product?.price}
+                <sup>.00</sup>
+              </span>{" "}
+              €
+            </span>
+          </span>
+        </h1>
+        <h2>
+          <span className="text-sm text-green-600">
+            In Stock <span>{product?.stock}</span>
+          </span>
+        </h2>
+        <Button>Add to Cart</Button>
+      </div>
     </div>
   );
 };

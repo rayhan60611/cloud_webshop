@@ -1,11 +1,13 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import {
   getAuth,
   signInWithPopup,
   GoogleAuthProvider,
   signOut,
+  onAuthStateChanged,
 } from "firebase/auth";
 import app from "@/firebase/firebase.config";
+import { Slide, toast } from "react-toastify";
 
 export const AuthContext = createContext();
 
@@ -23,6 +25,17 @@ const AuthProviders = ({ children }) => {
         const loggedInUser = result.user;
         console.log(loggedInUser);
         setUser(loggedInUser);
+        toast.success(`Login Successful`, {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Slide,
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -35,12 +48,35 @@ const AuthProviders = ({ children }) => {
         setUser(null);
         // Sign-out successful.
         console.log(result);
+        toast.error(`Logout Successful`, {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Slide,
+        });
       })
       .catch((error) => {
         // An error happened.
         console.log(error);
       });
   };
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      // console.log(currentUser);
+      setUser(currentUser);
+      setLoading(false);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   const authInfo = {
     user,
