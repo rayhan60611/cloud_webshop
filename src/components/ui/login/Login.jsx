@@ -2,13 +2,22 @@ import { useContext } from "react";
 import { Input } from "../input";
 import { Button } from "../button";
 import { AuthContext } from "@/providers/AuthProviders";
+// import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const { handleGooglePopupLogin } = useContext(AuthContext);
 
+  // const navigate = useNavigate();
+
   const handleLogin = (event) => {
     event.preventDefault();
   };
+  console.log("login");
+  // useEffect(() => {
+  //   if (user) {
+  //     navigate("/"); // Redirect to home page if user is already logged in
+  //   }
+  // }, [user, navigate]);
 
   return (
     <form onSubmit={handleLogin}>

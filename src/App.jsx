@@ -13,7 +13,7 @@ function App() {
       {/* <Navbar></Navbar> */}
       <NavbarNew />
       <Outlet />
-      <Footer></Footer>
+      <Footer />
       <ToastContainer />
     </div>
     // </div>

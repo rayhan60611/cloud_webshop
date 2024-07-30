@@ -22,7 +22,7 @@ const AllProducts = () => {
     content = <NoProductAvailable />;
   } else {
     content = (
-      <div className="flex-1 flex flex-wrap items-stretch gap-4 ">
+      <div className="flex-1 grid grid-cols-1 sm:grid-cols-2  md:grid-cols-2 lg:grid-cols-3 justify-items-center gap-5 md:gap-10 ">
         {products.map((product) => (
           <ProductCart key={product._id} product={product} />
         ))}
@@ -31,7 +31,7 @@ const AllProducts = () => {
   }
 
   return (
-    <div className="flex flex-1 flex-col md:flex-row my-6 gap-10 md:gap-4 px-4 md:items-stretch ">
+    <div className="flex flex-1 flex-col xl:flex-row my-6 gap-10 md:gap-4 px-4 md:items-stretch ">
       {/* Product category */}
 
       <ProductCategory />

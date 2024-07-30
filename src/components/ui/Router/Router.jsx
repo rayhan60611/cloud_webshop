@@ -8,6 +8,9 @@ import Home from "../home/Home";
 import AddProduct from "../allProducts/AddProduct";
 import UpdateProduct from "../allProducts/UpdateProduct";
 import SingleProductView from "../allProducts/SingleProductView";
+import PrivateRoutes from "../privateRoutes/PrivateRoutes";
+import UnProtectRoute from "../unprotectRoute/UnProtectRoute";
+import PersistUser from "../persistUser/PersistUser";
 
 async function fetchAllProduct() {
   const result = await fetch("http://localhost:5000/products");
@@ -17,7 +20,11 @@ async function fetchAllProduct() {
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: (
+      <PersistUser>
+        <App />
+      </PersistUser>
+    ),
     errorElement: <NotFoundPage />,
     children: [
       {
@@ -27,7 +34,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/login",
-        element: <Login />,
+        element: (
+          <UnProtectRoute>
+            <Login />
+          </UnProtectRoute>
+        ),
       },
       {
         path: "/allProduct",
@@ -36,7 +47,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/addProduct",
-        element: <AddProduct />,
+        element: (
+          <PrivateRoutes>
+            <AddProduct />
+          </PrivateRoutes>
+        ),
       },
       {
         path: "/updateProduct",

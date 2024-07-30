@@ -8,12 +8,15 @@ import {
 } from "firebase/auth";
 import app from "@/firebase/firebase.config";
 import { Slide, toast } from "react-toastify";
+import { LoaderPinwheel } from "lucide-react";
+// import { useNavigate } from "react-router-dom";
 
 export const AuthContext = createContext();
 
 // Initialize Firebase Authentication and get a reference to the service
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
+// const navigate = useNavigate();
 
 const AuthProviders = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -85,7 +88,16 @@ const AuthProviders = ({ children }) => {
     handleLogout,
   };
   return (
-    <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={authInfo}>
+      {" "}
+      {loading ? (
+        <div className="flex items-center justify-center fixed h-screen w-screen z-50 bg-primary-color">
+          <LoaderPinwheel className="animate-spin size-20 duration-1000" />
+        </div>
+      ) : (
+        children
+      )}
+    </AuthContext.Provider>
   );
 };
 

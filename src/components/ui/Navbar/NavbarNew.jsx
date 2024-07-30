@@ -1,6 +1,6 @@
-import { CircleUser, Menu, Search } from "lucide-react";
+import { CircleUser, Menu, Search, ShoppingCart } from "lucide-react";
 // import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { Sheet, SheetContent, SheetTrigger } from "../sheet";
 import { Button } from "../button";
 import { Input } from "../input";
@@ -197,6 +197,22 @@ const NavbarNew = () => {
             />
           </div>
         </form>
+        <div className="hover:text-lime-600 duration-500">
+          <Link to="/shoppingCart">
+            {/* <ShoppingCart className="relative"></ShoppingCart>
+            <span className="absolute bg-red-600 top-0 right-0 z-10">1</span> */}
+            <div className="flex justify-center items-center">
+              <div className="relative py-2">
+                <div className="absolute top-0 left-3">
+                  <p className="flex h-2 w-2 items-center justify-center rounded-full bg-red-500 p-2 text-xs text-white">
+                    3
+                  </p>
+                </div>
+                <ShoppingCart className="mt-1 h-6 w-6"></ShoppingCart>
+              </div>
+            </div>
+          </Link>
+        </div>
         {user ? (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

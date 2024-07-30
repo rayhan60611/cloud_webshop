@@ -21,9 +21,9 @@ const ProductCategory = () => {
       {categories.map((category) => (
         <button
           key={category}
-          className=" bg-black text-white rounded-md px-6 py-2 hover:bg-green-600 duration-500 hover:shadow-2xl w-full "
+          className=" bg-black text-white text-sm md:text-xs rounded-md px-6 py-2 hover:bg-lime-600 duration-500 hover:shadow-2xl w-full "
         >
-          {category}
+          {category.toUpperCase()}
         </button>
       ))}
     </div>
