@@ -16,7 +16,9 @@ const ProductCart = ({ product }) => {
         ></img>
       </div>
       <div className="flex-1 px-6 py-4 flex flex-col gap-2">
-        <div className="font-bold text-sm lg:text-base mb-2">{name}</div>
+        <div className="font-bold text-sm lg:text-base mb-2">
+          {name.toUpperCase()}
+        </div>
         <p className="text-gray-700 text-xs md:text-sm line-clamp-3">
           {description}
         </p>

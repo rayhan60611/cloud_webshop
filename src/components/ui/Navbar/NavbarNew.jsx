@@ -208,7 +208,7 @@ const NavbarNew = () => {
                     3
                   </p>
                 </div>
-                <ShoppingCart className="mt-1 h-6 w-6"></ShoppingCart>
+                <ShoppingCart className="mt-1 h-6 w-6" />
               </div>
             </div>
           </Link>

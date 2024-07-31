@@ -11,6 +11,7 @@ import SingleProductView from "../allProducts/SingleProductView";
 import PrivateRoutes from "../privateRoutes/PrivateRoutes";
 import UnProtectRoute from "../unprotectRoute/UnProtectRoute";
 import PersistUser from "../persistUser/PersistUser";
+import ShoppingCart from "../allProducts/ShoppingCart";
 
 async function fetchAllProduct() {
   const result = await fetch("http://localhost:5000/products");
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
       {
         path: "/products/:id",
         element: <SingleProductView />,
+      },
+      {
+        path: "/shoppingCart",
+        element: <ShoppingCart />,
       },
     ],
   },
