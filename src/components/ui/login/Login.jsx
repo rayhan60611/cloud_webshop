@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { Input } from "../input";
 import { Button } from "../button";
 import { AuthContext } from "@/providers/AuthProviders";
+// import { FaGoogle } from "react-icons/fa";
 // import { useNavigate } from "react-router-dom";
 
 const Login = () => {
@@ -20,7 +21,7 @@ const Login = () => {
   // }, [user, navigate]);
 
   return (
-    <form onSubmit={handleLogin}>
+    <form onSubmit={handleLogin} className="flex-1">
       <div className="container flex justify-center ">
         <div className=" flex flex-col gap-6 items-center p-8 rounded-xl my-12  shadow-lg hover:shadow-2xl duration-500 w-full md:w-2/4 h-full z-10">
           <img

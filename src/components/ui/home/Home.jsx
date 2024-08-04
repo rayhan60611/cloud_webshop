@@ -6,7 +6,7 @@ import HomeSkeleton from "./HomeSkeleton";
 
 const Home = () => {
   const { state } = useNavigation();
-  console.log(state);
+  // console.log(state);
   if (state === "loading") {
     return (
       <div>

@@ -12,12 +12,14 @@ import {
   StyleSheet,
   PDFDownloadLink,
   Image,
+  pdf,
 } from "@react-pdf/renderer";
-import { Download } from "lucide-react";
 import { AuthContext } from "@/providers/AuthProviders";
 import { Bounce, toast } from "react-toastify";
+import { ProductCartContext } from "./ProductCartProvider";
 
 const Checkout = () => {
+  const { setProductsCart } = useContext(ProductCartContext);
   const {
     filterData,
     error,
@@ -30,7 +32,7 @@ const Checkout = () => {
   } = useCart();
   //getting user name
   const { user } = useContext(AuthContext);
-
+  //   console.log(user);
   // Initialize useNavigate for redirection
   const navigate = useNavigate();
 
@@ -182,7 +184,43 @@ const Checkout = () => {
     </Document>
   );
 
-  const handleFormSubmit = (event) => {
+  //send email code by emailJs
+  const uploadPdf = async () => {
+    try {
+      // Generate the PDF blob
+      const doc = <MyDocument checkoutData={checkoutData} />;
+      const pdfBlob = await pdf(doc).toBlob();
+
+      // Create FormData and append the PDF blob
+      const formData = new FormData();
+      formData.append("attachment", pdfBlob, "checkout.pdf");
+      formData.append("to", user.email);
+      formData.append("text", "Thanks for purchasing from LowTech GmbH");
+
+      // Send the PDF to the backend
+      const response = await fetch(
+        "http://localhost:5000/products/send-email",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      if (response.ok) {
+        console.log("PDF uploaded successfully");
+        return true; // Indicate success
+      } else {
+        console.error("Failed to upload PDF");
+        return false; // Indicate failure
+      }
+    } catch (error) {
+      console.error("Error uploading PDF:", error);
+      return false; // Indicate failure
+    }
+  };
+
+  //paypal payment input
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
     const form = event.target;
     const username = form.userName.value;
@@ -214,8 +252,12 @@ const Checkout = () => {
       });
     }
     if (username || password) {
-      // Redirect to final confirmation page
-      navigate("/final-Confirmation");
+      const isSuccess = await uploadPdf();
+      if (isSuccess) {
+        setProductsCart({});
+        // Redirect to final confirmation page
+        navigate("/final-Confirmation");
+      }
     }
   };
 
@@ -306,7 +348,7 @@ const Checkout = () => {
             </div>
 
             <Button className="w-full p-6 rounded-lg mt-6 flex items-center gap-2 ">
-              <span> Confirm Peyment</span> <FaPaypal />
+              <span> Confirm Payment</span> <FaPaypal />
             </Button>
           </div>
         </form>

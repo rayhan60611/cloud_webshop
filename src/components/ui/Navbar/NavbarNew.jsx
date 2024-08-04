@@ -36,8 +36,8 @@ const NavbarNew = () => {
     0
   );
   return (
-    <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 px-4 md:px-6 z-50">
-      <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
+    <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 px-4 md:px-6 z-50 ">
+      <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6 ">
         <Link>
           <img
             className="h-auto max-w-10"
@@ -94,7 +94,7 @@ const NavbarNew = () => {
               </NavigationMenuTrigger>
               <NavigationMenuContent>
                 <div className="w-[400px] h-auto p-6 flex justify-evenly">
-                  <NavigationMenuLink asChild>
+                  <NavigationMenuLink>
                     <Link
                       className="border px-4 py-2 hover:bg-black hover:text-white duration-500"
                       to="/allProduct"
@@ -102,11 +102,11 @@ const NavbarNew = () => {
                       All Products
                     </Link>
                   </NavigationMenuLink>
-                  <NavigationMenuLink
-                    asChild
-                    className="border px-4 py-2 hover:bg-black hover:text-white duration-500"
-                  >
-                    <Link className="border p-2" to="/addProduct">
+                  <NavigationMenuLink>
+                    <Link
+                      className="border p-2  hover:text-white duration-500"
+                      to="/addProduct"
+                    >
                       Add Products
                     </Link>
                   </NavigationMenuLink>
@@ -115,7 +115,6 @@ const NavbarNew = () => {
             </NavigationMenuItem>
             <NavigationMenuItem>
               <NavigationMenuLink
-                asChild
                 className={cn(navigationMenuTriggerStyle(), "bg-transparent")}
               >
                 <Link
@@ -126,9 +125,8 @@ const NavbarNew = () => {
                 </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
-            <NavigationMenuItem>
+            {/* <NavigationMenuItem>
               <NavigationMenuLink
-                asChild
                 className={cn(navigationMenuTriggerStyle(), "bg-transparent")}
               >
                 <Link
@@ -138,12 +136,12 @@ const NavbarNew = () => {
                   Settings
                 </Link>
               </NavigationMenuLink>
-            </NavigationMenuItem>
+            </NavigationMenuItem> */}
           </NavigationMenuList>
         </NavigationMenu>
       </nav>
       <Sheet>
-        <SheetTrigger asChild>
+        <SheetTrigger>
           <Button variant="outline" size="icon" className="shrink-0 md:hidden">
             <Menu className="h-5 w-5" />
             <span className="sr-only">Toggle navigation menu</span>
@@ -221,7 +219,7 @@ const NavbarNew = () => {
         </div>
         {user ? (
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
+            <DropdownMenuTrigger>
               <Button variant="secondary" size="icon" className="rounded-full">
                 {user.photoURL ? (
                   <img
@@ -249,11 +247,11 @@ const NavbarNew = () => {
             </DropdownMenuContent>
           </DropdownMenu>
         ) : (
-          <Button>
-            <Link asChild to="/login">
-              Login
-            </Link>
-          </Button>
+          <Link to="/login">
+            <Button asChild>
+              <span>Login</span>
+            </Button>
+          </Link>
         )}
       </div>
     </header>
