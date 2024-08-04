@@ -24,11 +24,17 @@ import {
 } from "../navigation-menu";
 import { cn } from "@/lib/utils";
 import { useContext } from "react";
+import { ProductCartContext } from "../allProducts/ProductCartProvider";
 
 const NavbarNew = () => {
   const { user, handleLogout } = useContext(AuthContext);
   const fullname = user?.displayName.split(" ");
+  const { productCart } = useContext(ProductCartContext);
 
+  const totalCartItemCount = Object.values(productCart).reduce(
+    (previous, current) => current + previous,
+    0
+  );
   return (
     <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 px-4 md:px-6 z-50">
       <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
@@ -169,19 +175,19 @@ const NavbarNew = () => {
               Orders
             </Link>
             <Link
-              to="#"
+              to="/allProduct"
               className="text-muted-foreground hover:text-foreground"
             >
               Products
             </Link>
             <Link
-              to="#"
+              to="/aboutUs"
               className="text-muted-foreground hover:text-foreground "
             >
-              Customers
+              About Us
             </Link>
             <Link to="#" className="hover:text-foreground">
-              Settings
+              Contact Us
             </Link>
           </nav>
         </SheetContent>
@@ -205,7 +211,7 @@ const NavbarNew = () => {
               <div className="relative py-2">
                 <div className="absolute top-0 left-3">
                   <p className="flex h-2 w-2 items-center justify-center rounded-full bg-red-500 p-2 text-xs text-white">
-                    3
+                    {totalCartItemCount}
                   </p>
                 </div>
                 <ShoppingCart className="mt-1 h-6 w-6" />

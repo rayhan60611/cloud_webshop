@@ -4,8 +4,11 @@ import { CircleChevronRight, ShoppingCart } from "lucide-react";
 import { Button } from "../button";
 import { Link } from "react-router-dom";
 
-const ProductCart = ({ product }) => {
-  const { name, image, category, stock, price, description, _id } = product;
+const ProductCard = (props) => {
+  const { name, image, category, stock, price, description, _id } =
+    props.product;
+  const handleAddToCart = props.handleAddToCart;
+
   return (
     <div className="max-w-sm flex flex-col justify-evenly rounded overflow-hidden shadow-lg hover:scale-105 duration-500 hover:shadow-2xl pb-4">
       <div className="flex-1">
@@ -35,11 +38,11 @@ const ProductCart = ({ product }) => {
           </Button>
           <Button
             className="flex justify-center gap-1 w-fit bg-lime-600 hover:text-black hover:bg-lime-500"
-            asChild
+            onClick={() => {
+              handleAddToCart(props.product);
+            }}
           >
-            <Link to={`/products/${_id}`}>
-              Add to Cart <ShoppingCart />
-            </Link>
+            Add to Cart <ShoppingCart />
           </Button>
         </div>
       </div>
@@ -47,4 +50,4 @@ const ProductCart = ({ product }) => {
   );
 };
 
-export default ProductCart;
+export default ProductCard;

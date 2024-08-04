@@ -12,7 +12,7 @@ const ProductCategory = () => {
       .catch((error) => console.log(error));
   }, []);
 
-  console.log(categories);
+  // console.log(categories);
   return (
     <div className="flex flex-col gap-3 rounded-sm px-2 border-[2px] border-dotted max-h-[300px] overflow-auto py-4 basis-2/12 md:max-h-[inherit]">
       <h1 className="text-sm text-center font-semibold w-full">

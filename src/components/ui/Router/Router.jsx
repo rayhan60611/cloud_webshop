@@ -12,6 +12,8 @@ import PrivateRoutes from "../privateRoutes/PrivateRoutes";
 import UnProtectRoute from "../unprotectRoute/UnProtectRoute";
 import PersistUser from "../persistUser/PersistUser";
 import ShoppingCart from "../allProducts/ShoppingCart";
+import Checkout from "../allProducts/Checkout";
+import FinalConfirmation from "../finalConfirmation/FinalConfirmation";
 
 async function fetchAllProduct() {
   const result = await fetch("http://localhost:5000/products");
@@ -65,6 +67,14 @@ const router = createBrowserRouter([
       {
         path: "/shoppingCart",
         element: <ShoppingCart />,
+      },
+      {
+        path: "/checkout",
+        element: <Checkout />,
+      },
+      {
+        path: "/final-Confirmation",
+        element: <FinalConfirmation />,
       },
     ],
   },
