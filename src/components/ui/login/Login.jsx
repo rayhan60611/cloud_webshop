@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { Input } from "../input";
 import { Button } from "../button";
 import { AuthContext } from "@/providers/AuthProviders";
-// import { FaGoogle } from "react-icons/fa";
+import { FaGoogle } from "react-icons/fa";
 // import { useNavigate } from "react-router-dom";
 
 const Login = () => {
@@ -35,7 +35,13 @@ const Login = () => {
           <Button type="submit">Login</Button>
           <hr className="w-full border" />
           <div>
-            <Button onClick={handleGooglePopupLogin}>Login with Google</Button>
+            <Button
+              className="flex gap-2 justify-center items-center"
+              onClick={handleGooglePopupLogin}
+            >
+              <span>Login with Google </span>
+              <FaGoogle />
+            </Button>
           </div>
         </div>
       </div>
