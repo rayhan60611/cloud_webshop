@@ -66,15 +66,27 @@ const router = createBrowserRouter([
       },
       {
         path: "/shoppingCart",
-        element: <ShoppingCart />,
+        element: (
+          <PrivateRoutes>
+            <ShoppingCart />
+          </PrivateRoutes>
+        ),
       },
       {
         path: "/checkout",
-        element: <Checkout />,
+        element: (
+          <PrivateRoutes>
+            <Checkout />
+          </PrivateRoutes>
+        ),
       },
       {
         path: "/final-Confirmation",
-        element: <FinalConfirmation />,
+        element: (
+          <PrivateRoutes>
+            <FinalConfirmation />
+          </PrivateRoutes>
+        ),
       },
     ],
   },

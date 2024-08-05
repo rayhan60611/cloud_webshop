@@ -13,7 +13,7 @@ const Login = () => {
   const handleLogin = (event) => {
     event.preventDefault();
   };
-  console.log("login");
+  // console.log("login");
   // useEffect(() => {
   //   if (user) {
   //     navigate("/"); // Redirect to home page if user is already logged in

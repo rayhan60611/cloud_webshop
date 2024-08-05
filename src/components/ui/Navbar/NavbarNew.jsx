@@ -104,7 +104,7 @@ const NavbarNew = () => {
                   </NavigationMenuLink>
                   <NavigationMenuLink>
                     <Link
-                      className="border p-2  hover:text-white duration-500"
+                      className="border px-4 py-2 hover:bg-black hover:text-white duration-500"
                       to="/addProduct"
                     >
                       Add Products

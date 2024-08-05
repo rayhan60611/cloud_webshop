@@ -96,13 +96,17 @@ const AllProducts = () => {
   }
 
   return (
-    <div className="flex flex-1 flex-col xl:flex-row my-6 gap-10 md:gap-4 px-4 md:items-stretch ">
-      {/* Product category */}
-
-      <ProductCategory />
-
-      {/* All products */}
-      {content}
+    <div className="container">
+      <div className="flex flex-col gap-2 justify-center items-center my-10">
+        <h1 className="text-base md:text-xl font-bold">Shopping Cart</h1>
+        <hr className="border-2 text-lime-600 w-full" />
+      </div>
+      <div className="flex flex-1 flex-col xl:flex-row my-6 gap-10 md:gap-4 px-4 md:items-stretch ">
+        {/* Product category */}
+        <ProductCategory />
+        {/* All products */}
+        {content}
+      </div>
     </div>
   );
 };
