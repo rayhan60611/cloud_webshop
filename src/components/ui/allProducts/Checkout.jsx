@@ -29,6 +29,7 @@ const Checkout = () => {
     shippingFee,
     taxFee,
     totalPrice,
+    productCart,
   } = useCart();
   //getting user name
   const { user } = useContext(AuthContext);
@@ -61,13 +62,14 @@ const Checkout = () => {
     },
     title: {
       fontSize: 24,
-      marginTop: 15,
+      marginTop: 10,
       marginBottom: 15,
       textAlign: "center",
     },
     text: {
       fontSize: 12,
       textAlign: "center",
+      marginTop: 10,
       marginBottom: 2,
     },
     list: {
@@ -96,13 +98,14 @@ const Checkout = () => {
       borderWidth: 1,
       borderRightWidth: 0,
       borderBottomWidth: 0,
+      marginBottom: 30,
     },
     tableRow: {
       margin: "auto",
       flexDirection: "row",
     },
     tableCol: {
-      width: "25%",
+      width: "20%",
       borderStyle: "solid",
       borderWidth: 1,
       borderLeftWidth: 0,
@@ -110,19 +113,11 @@ const Checkout = () => {
     },
     tableCell: {
       margin: 5,
-      fontSize: 10,
+      fontSize: 6,
     },
   });
 
-  const checkoutData = {
-    orderId: `LT-${Math.floor(Math.random() * 10000)}`,
-    customerName: "John Doe",
-    items: filterData,
-    total: totalPrice,
-    message: "Thank you for your purchase!",
-  };
-
-  const MyDocument = ({ checkoutData }) => (
+  const MyDocument = () => (
     <Document>
       <Page style={styles.page}>
         <View style={styles.section}>
@@ -131,54 +126,61 @@ const Checkout = () => {
             src="../../../../public/logtech-black.png"
           ></Image>
           <Text style={styles.title}>LowTech GmbH Invoice</Text>
-          <Text style={styles.text}>Order ID: {checkoutData.orderId}</Text>
+          <Text style={styles.text}>
+            Order ID: {`LT-${Math.floor(Math.random() * 10000)}`}
+          </Text>
           <Text style={styles.text}>Customer Name: {user.displayName}</Text>
           <Text style={styles.text}>{date}</Text>
           <Text style={styles.title}>Total Items:</Text>
-          {/* <View style={styles.list}>
-            {checkoutData.items.map((item, index) => (
-              <Text key={index} style={styles.listItem}>
-                {index + 1} | {item.name}: ${item.price.toFixed(2)}
-              </Text>
-            ))}
-          </View> */}
           <View style={styles.table}>
             {/* Table Header */}
             <View style={styles.tableRow}>
               <View style={styles.tableCol}>
-                <Text style={styles.tableCell}>Header 1</Text>
+                <Text style={styles.tableCell}>Item No</Text>
               </View>
               <View style={styles.tableCol}>
-                <Text style={styles.tableCell}>Header 2</Text>
+                <Text style={styles.tableCell}>Name</Text>
               </View>
               <View style={styles.tableCol}>
-                <Text style={styles.tableCell}>Header 3</Text>
+                <Text style={styles.tableCell}>Quantity</Text>
               </View>
               <View style={styles.tableCol}>
-                <Text style={styles.tableCell}>Header 4</Text>
+                <Text style={styles.tableCell}>Price</Text>
+              </View>
+              <View style={styles.tableCol}>
+                <Text style={styles.tableCell}>Total = Quantity x Price</Text>
               </View>
             </View>
             {/* Table Row */}
-            <View style={styles.tableRow}>
-              <View style={styles.tableCol}>
-                <Text style={styles.tableCell}>Row 1 Col 1</Text>
-              </View>
-              <View style={styles.tableCol}>
-                <Text style={styles.tableCell}>Row 1 Col 2</Text>
-              </View>
-              <View style={styles.tableCol}>
-                <Text style={styles.tableCell}>Row 1 Col 3</Text>
-              </View>
-              <View style={styles.tableCol}>
-                <Text style={styles.tableCell}>Row 1 Col 4</Text>
-              </View>
-            </View>
+            {filterData.map((product, index) => {
+              return (
+                <View style={styles.tableRow} key={index}>
+                  <View style={styles.tableCol}>
+                    <Text style={styles.tableCell}>{index + 1}</Text>
+                  </View>
+                  <View style={styles.tableCol}>
+                    <Text style={styles.tableCell}>{product.name}</Text>
+                  </View>
+                  <View style={styles.tableCol}>
+                    <Text style={styles.tableCell}>
+                      {productCart[product._id]}
+                    </Text>
+                  </View>
+                  <View style={styles.tableCol}>
+                    <Text style={styles.tableCell}>{product.price}</Text>
+                  </View>
+                  <View style={styles.tableCol}>
+                    <Text style={styles.tableCell}>
+                      {productCart[product._id] * product.price}
+                    </Text>
+                  </View>
+                </View>
+              );
+            })}
             {/* Additional rows can be added similarly */}
           </View>
-          <Text style={styles.text}>
-            Total: ${checkoutData.total.toFixed(2)}
-          </Text>
-          <Text style={styles.message}>{checkoutData.message}</Text>
+          <Text style={styles.text}>Total: ${totalPrice.toFixed(2)}</Text>
+          <Text style={styles.message}>Thank you for your purchase!</Text>
         </View>
       </Page>
     </Document>
@@ -188,12 +190,12 @@ const Checkout = () => {
   const uploadPdf = async () => {
     try {
       // Generate the PDF blob
-      const doc = <MyDocument checkoutData={checkoutData} />;
+      const doc = <MyDocument checkoutData={filterData} />;
       const pdfBlob = await pdf(doc).toBlob();
 
       // Create FormData and append the PDF blob
       const formData = new FormData();
-      formData.append("attachment", pdfBlob, "checkout.pdf");
+      formData.append("attachment", pdfBlob, "Invoice.pdf");
       formData.append("to", user.email);
       formData.append("text", "Thanks for purchasing from LowTech GmbH");
 
@@ -272,7 +274,7 @@ const Checkout = () => {
       <div className="my-6 flex justify-end mr-10">
         <PDFDownloadLink
           className=" bg-[#0F172A] text-white hover:bg-lime-500 hover:text-black hover:shadow-xl duration-500 text-sm p-2"
-          document={<MyDocument checkoutData={checkoutData} />}
+          document={<MyDocument checkoutData={filterData} />}
           fileName="LowTech GmbH Invoice.pdf"
         >
           {({ blob, url, loading }) =>

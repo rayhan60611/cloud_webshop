@@ -70,6 +70,7 @@ const useCart = () => {
     shippingFee,
     taxFee,
     totalPrice,
+    productCart,
   };
 };
 
