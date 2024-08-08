@@ -127,7 +127,7 @@ const AllProducts = () => {
     }
     count = result.length;
     content = result.length ? (
-      <div className="flex-1 grid grid-cols-1 sm:grid-cols-2  md:grid-cols-2 lg:grid-cols-3 justify-items-center gap-5 md:gap-10">
+      <div className="flex-1 grid grid-cols-[repeat(auto-fit,_minmax(250px,_1fr))] gap-5 md:gap-5 ">
         {result.map((product) => (
           <ProductCard
             key={product._id}

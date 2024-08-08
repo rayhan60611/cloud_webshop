@@ -1,6 +1,6 @@
 import { CircleUser, Menu, Search, ShoppingCart } from "lucide-react";
 // import React from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useMatch } from "react-router-dom";
 import { Sheet, SheetContent, SheetTrigger } from "../sheet";
 import { Button } from "../button";
 import { Input } from "../input";

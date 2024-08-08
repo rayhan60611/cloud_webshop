@@ -1,12 +1,14 @@
 import React, { useEffect, useState, useTransition } from "react";
 import { Input } from "../input";
 import { Search } from "lucide-react";
-import { useSearchParams } from "react-router-dom";
+import { useMatch, useMatches, useSearchParams } from "react-router-dom";
 
 const SearchProduct = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [isPending, startTransition] = useTransition();
   const [searchInput, setSearchInput] = useState("");
+  // const match = useMatches("/allProduct" || "/home");
+
   useEffect(() => {
     const query = searchParams.get("q");
     if (query) {
@@ -30,6 +32,8 @@ const SearchProduct = () => {
       }
     });
   };
+
+  // if (!match) return null;
   return (
     <div className="relative">
       <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />

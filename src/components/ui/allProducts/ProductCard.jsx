@@ -10,7 +10,7 @@ const ProductCard = (props) => {
   const handleAddToCart = props.handleAddToCart;
 
   return (
-    <div className="max-w-sm flex flex-col justify-evenly rounded overflow-hidden shadow-lg hover:scale-105 duration-500 hover:shadow-2xl pb-4">
+    <div className=" flex flex-col justify-evenly rounded overflow-hidden shadow-lg hover:scale-105 duration-500 hover:shadow-2xl pb-4">
       <div className="flex-1">
         <img
           className="w-full aspect-square"
@@ -35,14 +35,17 @@ const ProductCard = (props) => {
         <p>
           <span>€</span> {price}
         </p>
-        <div className="flex justify-between gap-4">
-          <Button className="flex justify-center gap-1 w-fit" asChild>
+        <div className="flex flex-col justify-between gap-4 flex-wrap">
+          <Button
+            className="flex justify-center gap-1 w-full hover:bg-slate-500 duration-700"
+            asChild
+          >
             <Link to={`/products/${_id}`}>
               View More <CircleChevronRight />
             </Link>
           </Button>
           <Button
-            className="flex justify-center gap-1 w-fit bg-lime-600 hover:text-black hover:bg-lime-500"
+            className="flex justify-center gap-1 w-full bg-lime-600 hover:text-black hover:bg-lime-500 duration-700"
             onClick={() => {
               handleAddToCart(props.product);
             }}
