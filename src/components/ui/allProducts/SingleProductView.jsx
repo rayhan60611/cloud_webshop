@@ -1,13 +1,16 @@
 import { Loader, LoaderPinwheel } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Button } from "../button";
+import { ProductCartContext } from "./ProductCartProvider";
+import { Bounce, toast } from "react-toastify";
 
 const SingleProductView = () => {
   const [product, setProduct] = useState(null);
   const [loader, setLoader] = useState(true);
   const [isFinish, setIsFinish] = useState(false);
   const { id } = useParams();
+  const { setProductsCart } = useContext(ProductCartContext);
 
   useEffect(() => {
     fetch(`http://localhost:5000/products/${id}`)
@@ -40,6 +43,48 @@ const SingleProductView = () => {
         <LoaderPinwheel className="animate-spin size-20 duration-1000" />
       </div>
     );
+
+  const handleAddToCart = (product) => {
+    setProductsCart((prev) => {
+      const quantity = prev[product._id];
+      if (quantity >= product.stock) {
+        toast.warn(`Product is out of Stock!!!`, {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+        return prev;
+      }
+      if (!quantity) {
+        prev[product._id] = 1;
+      } else {
+        const newQuantity = quantity + 1;
+        prev[product._id] = newQuantity;
+      }
+      // prev.push(product);
+      return { ...prev };
+    });
+    // setCartProducts?.setCart(product);
+
+    // let newCart = [];
+    // const exists = cart.find((pd) => pd.id === product._id);
+    // if (!exists) {
+    //   product.quantity = 1;
+    //   newCart = [...cart, product];
+    // } else {
+    //   exists.quantity = exists.quantity + 1;
+    //   const remaining = cart.filter((pd) => pd.id != product._id);
+    //   newCart = [...remaining, exists];
+    // }
+    // // setCart(newCart);
+    // setCartProducts(newCart);
+  };
   return (
     <div className="flex-1 container my-8">
       <div className="flex flex-col  shadow-2xl items-center gap-4 p-8 rounded-xl">
@@ -67,7 +112,13 @@ const SingleProductView = () => {
             In Stock <span>{product?.stock}</span>
           </span>
         </h2>
-        <Button>Add to Cart</Button>
+        <Button
+          onClick={() => {
+            handleAddToCart(product);
+          }}
+        >
+          Add to Cart
+        </Button>
       </div>
     </div>
   );

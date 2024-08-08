@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { Button } from "../button";
 import { MinusIcon, PlusIcon, TrashIcon } from "lucide-react";
 import { ProductCartContext } from "./ProductCartProvider";
+import { Bounce, toast } from "react-toastify";
 
 const ShoppingCartItem = ({ product }) => {
   const { productCart, setProductsCart } = useContext(ProductCartContext);
@@ -20,6 +21,20 @@ const ShoppingCartItem = ({ product }) => {
   const increment = () => {
     setProductsCart((prev) => {
       const quantity = prev[product._id];
+      if (quantity >= product.stock) {
+        toast.warn(`Product is out of Stock!!!`, {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+        return prev;
+      }
       if (!quantity) {
         prev[product._id] = 1;
       } else {

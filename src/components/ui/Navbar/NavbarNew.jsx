@@ -122,7 +122,7 @@ const NavbarNew = () => {
                   to="#"
                   className="text-muted-foreground transition-colors hover:text-foreground "
                 >
-                  Customers
+                  Contact us
                 </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>

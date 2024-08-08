@@ -12,6 +12,8 @@ import { useContext, useEffect, useState } from "react";
 import { ProductCartContext } from "./ProductCartProvider";
 import { addToCart, getShoppingCart } from "../utility/localStorage";
 import Fuse from "fuse.js";
+import { Button } from "../button";
+import { Bounce, toast } from "react-toastify";
 
 const AllProducts = () => {
   const products = useLoaderData();
@@ -21,15 +23,14 @@ const AllProducts = () => {
   const decodedSearchValue = searchValue
     ? decodeURIComponent(searchValue)
     : null;
+  const categoryValue = searchParams.get("c");
+  const decodedCategoryValue = categoryValue
+    ? decodeURIComponent(categoryValue)
+    : null;
 
-  const {
-    // products: cart,
-    // setProducts: setCartProducts,
-    // mainCart,
-    // setMainCart,
-    setProductsCart,
-  } = useContext(ProductCartContext);
+  const { setProductsCart } = useContext(ProductCartContext);
 
+  let count = 0;
   //getting data from localStorage and seting it to  SetCart State
   // useEffect(() => {
   //   const shoppingCart = getShoppingCart();
@@ -58,6 +59,20 @@ const AllProducts = () => {
   const handleAddToCart = (product) => {
     setProductsCart((prev) => {
       const quantity = prev[product._id];
+      if (quantity >= product.stock) {
+        toast.warn(`Product is out of Stock!!!`, {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+        return prev;
+      }
       if (!quantity) {
         prev[product._id] = 1;
       } else {
@@ -102,15 +117,28 @@ const AllProducts = () => {
     // console.log(decodedSearchValue);
     // console.log(fuseResult);
     const finalSearchResult = fuseResult.map((item) => item.item);
-    content = (
-      <div className="flex-1 grid grid-cols-1 sm:grid-cols-2  md:grid-cols-2 lg:grid-cols-3 justify-items-center gap-5 md:gap-10 ">
-        {(decodedSearchValue ? finalSearchResult : products).map((product) => (
+
+    let result = decodedSearchValue ? finalSearchResult : products;
+    if (decodedCategoryValue) {
+      result = result.filter(
+        (item) =>
+          item.category.toLowerCase() === decodedCategoryValue.toLowerCase()
+      );
+    }
+    count = result.length;
+    content = result.length ? (
+      <div className="flex-1 grid grid-cols-1 sm:grid-cols-2  md:grid-cols-2 lg:grid-cols-3 justify-items-center gap-5 md:gap-10">
+        {result.map((product) => (
           <ProductCard
             key={product._id}
             product={product}
             handleAddToCart={handleAddToCart}
           ></ProductCard>
         ))}
+      </div>
+    ) : (
+      <div className="min-h-40 flex justify-center items-center ">
+        <span className="">No Product Found</span>
       </div>
     );
   }
@@ -119,13 +147,15 @@ const AllProducts = () => {
     <div className="container flex-1">
       <div className="flex flex-col gap-2 justify-center items-center my-10">
         <h1 className="text-base md:text-xl font-bold">
-          All Products <span>{products.length}</span>
+          All Products <span>{count}</span>
         </h1>
         <hr className="border-2 text-lime-600 w-full" />
       </div>
       <div className="flex flex-1 flex-col xl:flex-row my-6 gap-10 md:gap-4 px-4 md:items-stretch ">
         {/* Product category */}
+
         <ProductCategory />
+
         {/* All products */}
         {content}
       </div>

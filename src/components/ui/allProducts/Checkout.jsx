@@ -179,7 +179,7 @@ const Checkout = () => {
             })}
             {/* Additional rows can be added similarly */}
           </View>
-          <Text style={styles.text}>Total: ${totalPrice.toFixed(2)}</Text>
+          <Text style={styles.text}>Total: €{totalPrice.toFixed(2)}</Text>
           <Text style={styles.message}>Thank you for your purchase!</Text>
         </View>
       </Page>

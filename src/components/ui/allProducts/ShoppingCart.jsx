@@ -61,7 +61,7 @@ const ShoppingCart = () => {
                   Shipping estimate
                   <span className="ml-1"></span>
                 </span>
-                <span>€ {shippingFee && 0}</span>
+                <span>€ {totalCartItemCount ? shippingFee : 0}</span>
               </div>
               <div className="flex justify-between text-gray-700 mb-2">
                 <span className="flex items-center">
@@ -72,7 +72,7 @@ const ShoppingCart = () => {
               </div>
               <div className="flex justify-between text-gray-700 font-semibold pt-4 border-t border-gray-200 mt-4">
                 <span>Order total</span>
-                <span>€ {totalCartItemCount ? totalPrice : 0}</span>
+                <span>€ {totalCartItemCount ? totalPrice.toFixed(2) : 0}</span>
               </div>
             </div>
             <Link to="/checkout">
