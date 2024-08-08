@@ -1,5 +1,9 @@
 // import React from "react";
-import { useLoaderData, useNavigation } from "react-router-dom";
+import {
+  useLoaderData,
+  useNavigation,
+  useSearchParams,
+} from "react-router-dom";
 import ProductCategory from "./ProductCategory";
 import { LoaderPinwheel } from "lucide-react";
 import NoProductAvailable from "./NoProductAvailable";
@@ -7,10 +11,17 @@ import ProductCard from "./ProductCard";
 import { useContext, useEffect, useState } from "react";
 import { ProductCartContext } from "./ProductCartProvider";
 import { addToCart, getShoppingCart } from "../utility/localStorage";
+import Fuse from "fuse.js";
 
 const AllProducts = () => {
   const products = useLoaderData();
   const navigation = useNavigation();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const searchValue = searchParams.get("q");
+  const decodedSearchValue = searchValue
+    ? decodeURIComponent(searchValue)
+    : null;
+
   const {
     // products: cart,
     // setProducts: setCartProducts,
@@ -75,16 +86,25 @@ const AllProducts = () => {
   let content;
   if (navigation.state === "loading") {
     content = (
-      <div className="flex flex-1 justify-center items-center">
+      <div className="flex flex-1 justify-center items-center ">
         <LoaderPinwheel className="animate-spin size-20 duration-1000" />
       </div>
     );
   } else if (!products || products.length === 0) {
     content = <NoProductAvailable />;
   } else {
+    const fuse = new Fuse(products, {
+      threshold: 0.3,
+      keys: ["name", "price", "category"],
+    });
+
+    const fuseResult = fuse.search(decodedSearchValue ?? "");
+    // console.log(decodedSearchValue);
+    // console.log(fuseResult);
+    const finalSearchResult = fuseResult.map((item) => item.item);
     content = (
       <div className="flex-1 grid grid-cols-1 sm:grid-cols-2  md:grid-cols-2 lg:grid-cols-3 justify-items-center gap-5 md:gap-10 ">
-        {products.map((product) => (
+        {(decodedSearchValue ? finalSearchResult : products).map((product) => (
           <ProductCard
             key={product._id}
             product={product}
@@ -96,9 +116,11 @@ const AllProducts = () => {
   }
 
   return (
-    <div className="container">
+    <div className="container flex-1">
       <div className="flex flex-col gap-2 justify-center items-center my-10">
-        <h1 className="text-base md:text-xl font-bold">Shopping Cart</h1>
+        <h1 className="text-base md:text-xl font-bold">
+          All Products <span>{products.length}</span>
+        </h1>
         <hr className="border-2 text-lime-600 w-full" />
       </div>
       <div className="flex flex-1 flex-col xl:flex-row my-6 gap-10 md:gap-4 px-4 md:items-stretch ">

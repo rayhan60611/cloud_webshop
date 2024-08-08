@@ -35,7 +35,7 @@ const ShoppingCart = () => {
             })}
           </div>
         ) : (
-          <div className="flex flex-col justify-center items-center">
+          <div className="flex flex-col justify-start items-center mt-28">
             <div className="text-2xl font-bold">
               No product available in cart
             </div>

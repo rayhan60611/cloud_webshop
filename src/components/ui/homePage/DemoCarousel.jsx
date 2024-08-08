@@ -14,15 +14,15 @@ const DemoCarousel = () => {
       >
         <div>
           <img className="h-[100px]:" src="../../../../public/CAROUSEL_1.jpg" />
-          <p className="legend">Legend 1</p>
+          <p className="legend">LowTech GmbH Slider 1</p>
         </div>
         <div>
           <img src="../../../../public/CAROUSEL_2.jpg" />
-          <p className="legend">Legend 2</p>
+          <p className="legend">LowTech GmbH Slider 2</p>
         </div>
         <div>
           <img src="../../../../public/CAROUSEL_3.jpg" />
-          <p className="legend">Legend 3</p>
+          <p className="legend">LowTech GmbH Slider 3</p>
         </div>
       </Carousel>
     </div>

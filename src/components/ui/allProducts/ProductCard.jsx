@@ -25,6 +25,11 @@ const ProductCard = (props) => {
         <p className="text-gray-700 text-xs md:text-sm line-clamp-3">
           {description}
         </p>
+        <div>
+          <span className="text-xs font-semibold bg-orange-500 p-[5px] rounded-xl text-white">
+            {category}
+          </span>
+        </div>
       </div>
       <div className="px-6 pt-4 pb-2 flex flex-col gap-2">
         <p>
