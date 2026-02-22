@@ -40,11 +40,7 @@ const NavbarNew = () => {
     <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 px-4 md:px-6 z-50 ">
       <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6 ">
         <Link>
-          <img
-            className="h-auto max-w-10"
-            src="../../../../public/logtech-black.png"
-            alt=""
-          />
+          <img className="h-auto max-w-10" src="/logtech-black.png" alt="" />
         </Link>
         <Link
           to="/"
